@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{8431ddb4-e4b7-46f5-84fc-0dd7d8619be3}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{3b478cbf-353f-480f-b930-41d8fe2a19aa}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource files">
+      <UniqueIdentifier>{4528ecf0-f546-42e4-8ae1-00cb706caa19}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Source files\Device-specific files">
+      <UniqueIdentifier>{94ffeead-d3eb-4b84-a48a-6924c6ceba1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files\Device-specific files\StdPeriph">
+      <UniqueIdentifier>{13c3c21b-f8b0-485a-a498-1a9ecdf8ff6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{0fafe3fe-fe50-435e-a93d-d92946cf4b7b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="stm32.props">
+      <Filter>Source files\Device-specific files</Filter>
+    </None>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\StartupFiles\startup_stm32f103xb.c">
+      <Filter>Source files\Device-specific files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\misc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <ClCompile Include="$(BSP_ROOT)\STM32F1xxxx\CMSIS_StdPeriph\CM3\CoreSupport\core_cm3.c">
+      <Filter>Source files\Device-specific files\StdPeriph</Filter>
+    </ClCompile>
+    <None Include="PMSM_Sensored_gd32-Debug.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="PMSM_Sensored_gd32-Release.vgdbsettings">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <None Include="stm32.xml">
+      <Filter>VisualGDB settings</Filter>
+    </None>
+    <ClCompile Include="main.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="pmsm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_adc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_bkp.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_can.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_crc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_dac.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_dbg.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_dma.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_enet.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_exmc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_exti.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_fmc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_fwdgt.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_gpio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_i2c.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_misc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_pmu.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_rcu.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_rtc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_sdio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_spi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_timer.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_usart.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_wwdgt.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Firmware\CMSIS\GD\GD32F10x\Source\system_gd32f10x.c">
+      <Filter>Source files\Device-specific files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adc_dma.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="pmsm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="sysclk.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_adc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_bkp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_can.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_crc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_dac.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_dbg.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_dma.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_enet.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_exmc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_exti.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_fmc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_fwdgt.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_gpio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_i2c.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_misc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_pmu.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_rcu.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_rtc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_sdio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_spi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_timer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_usart.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\GD32F10x_standard_peripheral\Include\gd32f10x_wwdgt.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="gd32f10x.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="gd32f10x_adc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="gd32f10x_libopt.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Firmware\CMSIS\GD\GD32F10x\Include\system_gd32f10x.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
