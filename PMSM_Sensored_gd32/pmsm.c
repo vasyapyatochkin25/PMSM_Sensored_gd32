@@ -14,7 +14,7 @@ void TIM4_IRQHandler(void);
 volatile uint8_t PMSM_MotorRunFlag = 0;
 volatile uint8_t PMSM_MotorSpin = PMSM_CW;
 uint8_t PMSM_State[6] = {0, 0, 0, 0, 0, 0};
-volatile uint8_t	PMSM_Sensors = 0;
+volatile uint8_t PMSM_Sensors = 0;
 volatile uint8_t PMSM_SinTableIndex = 0;
 volatile uint16_t PMSM_PWM = 0;
 volatile uint16_t PMSM_Speed = 0;
@@ -23,7 +23,7 @@ volatile uint8_t PMSM_ModeEnabled = 0;
 volatile uint8_t OverCurrentFlag = 0;
 // Timing (points in sine table)
 // sine table contains 192 items; 360/192 = 1.875 degrees per item
-volatile int8_t PMSM_Timing = 10; // 15 * 1.875 = 28.125 degrees
+volatile static int8_t PMSM_Timing = 10; // 15 * 1.875 = 28.125 degrees
 
 // Forward Motor steps
 static const uint8_t PMSM_BRIDGE_STATE_FORWARD[8][6] =
@@ -411,7 +411,7 @@ void PMSM_PWMTimerInit(void){
 
 	// Time Base configuration
 	TIM_TimeBaseStructure.TIM_Prescaler = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned1;
 	TIM_TimeBaseStructure.TIM_Period = PMSM_CHOPPER_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
@@ -442,7 +442,7 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;
 
 	// Break functionality
-	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;/////////////////////////////////////////////////////
+	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
 	TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 

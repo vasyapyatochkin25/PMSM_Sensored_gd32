@@ -3,12 +3,12 @@
   <Memories>
     <MemoryUtilization>
       <MemoryName>FLASH</MemoryName>
-      <Used>17032</Used>
+      <Used>16436</Used>
       <Total>65536</Total>
     </MemoryUtilization>
     <MemoryUtilization>
       <MemoryName>SRAM</MemoryName>
-      <Used>92</Used>
+      <Used>100</Used>
       <Total>20480</Total>
     </MemoryUtilization>
   </Memories>

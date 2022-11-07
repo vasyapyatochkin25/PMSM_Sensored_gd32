@@ -2,13 +2,14 @@
 #define _PMSM_LIB_H_
 
 // PWM Frequency = 72000000/PMSM_CHOPPER_PERIOD
-#define PMSM_CHOPPER_PERIOD  4500
+//#define PMSM_CHOPPER_PERIOD  4500
+#define PMSM_CHOPPER_PERIOD  4000
 //#define PMSM_CHOPPER_PERIOD 2250
 //#define PMSM_CHOPPER_PERIOD 1125
 // Dead time = PMSM_NOL/72000000  (on 72MHz: 7 is 98ns)
 // (on 72MHz: 72 is 1000ns)
 //#define PMSM_NOL 72
-#define PMSM_NOL 108
+#define PMSM_NOL 150
 
 #define PMSM_ADC_START 200
 #define PMSM_ADC_STOP 50

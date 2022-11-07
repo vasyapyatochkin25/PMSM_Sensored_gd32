@@ -114,9 +114,6 @@
     <ClCompile Include="main.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="pmsm.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="Firmware\GD32F10x_standard_peripheral\Source\gd32f10x_adc.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adc_dma.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="pmsm.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="sysclk.h">
@@ -281,5 +275,13 @@
     <ClInclude Include="Firmware\CMSIS\GD\GD32F10x\Include\system_gd32f10x.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="pmsm.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pmsm.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

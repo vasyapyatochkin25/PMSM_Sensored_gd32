@@ -15,14 +15,15 @@ float InputSignalFreq = 0;
 
 extern uint8_t OverCurrentFlag;
 void expRunningAverage(float newVal, float* filVal, float k);
-float PWMSet;
+float PWMSet = 0;
 float Voltage, Current;
 float Speed;
+uint16_t CurrentZero;
 extern volatile int8_t PMSM_Timing;
 void SysTick_Handler(){
-	InputPWM_NoSignalFlag = 1;
-	InputSignalPercentDutyCycle = 0;
-	InputSignalFreq = 0;
+//	InputPWM_NoSignalFlag = 1;
+//	InputSignalPercentDutyCycle = 0;
+//	InputSignalFreq = 0;
 }
 
 ///////////////////////////////////////////////////////////	 
@@ -59,6 +60,8 @@ int main(void)
 //	//PMSM Init
 	PMSM_Init();
 
+	CurrentZero = adc_channel_sample(ADC_CHANNEL_3);
+	
 //	rcu_periph_clock_enable(RCU_GPIOA);
 //	gpio_init(GPIOA, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, GPIO_PIN_12);
 //
@@ -81,45 +84,41 @@ int main(void)
 
     while(1)
     {	    
-	    Voltage = (float)ADCBuffer[0] * 0.00493767;
-	    expRunningAverage((float)ADCBuffer[1] * 0.0075 + 2.0924, &Current, 0.001);  //* 0.0008056640625 * 21.621
-	    expRunningAverage((float)(TIME_CLOCK_SYSTICK / PMSM_GetSpeed()) / 22, &Speed, 0.0001);	
-	    if ((Speed > 500)&&(Speed < 5000))
-		  PMSM_Timing = (Speed * 0.0063 + 10);
+	    	    
+	    Voltage = (float)adc_channel_sample(ADC_CHANNEL_0) * 0.00493767;
+//	    expRunningAverage((float)ADCBuffer[1] * 0.0075 + 2.0924, &Current, 0.001);  //* 0.0008056640625 * 21.621
+	    expRunningAverage((float)(TIME_CLOCK_SYSTICK / PMSM_GetSpeed()) / 22, &Speed, 0.001);	
+	    
+//	    if (Speed < 4500)
+//		  PMSM_Timing = (Speed * 0.005);
 	    
 	    if (InputPWM_SignalFallingFlag)
 	    {
 		    InputPWM_SignalFallingFlag = 0;
-		    InputSignalPercentDutyCycle = 100 - (float)(InputPwmDutyCycle * 100) / InputPwmFreq;
-		    InputSignalPercentDutyCycle += 6;		    
+		    InputSignalPercentDutyCycle = 100 - (float)(InputPwmDutyCycle * 100) / InputPwmFreq;		    
 	    }
 	    if (InputPWM_SignalRisingFlag)
 	    {
 		    InputPWM_SignalRisingFlag = 0;
 		    InputSignalFreq = TIME_CLOCK_SYSTICK / InputPwmFreq;
 	    }
-	    
-	    
-	    
+	    	    
 //#define CONTROL_ADC
 #define CONTROL_PWM
 	    
 #if defined (CONTROL_ADC)
-//    	if (ADCBuffer[0] > PMSM_ADC_START) {
-    		// If Motor Is not run
-
+    	if (ADCBuffer[2] > PMSM_ADC_START) {    		
     		if (PMSM_MotorIsRun() == 0) {
     			// Start motor
     			PMSM_MotorSetSpin(PMSM_CW);
     			PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
     			PMSM_MotorSetRun();
-
-    		}
-    		PMSM_SetPWM(1000);
-	       			PMSM_SetPWM(PMSM_ADCToPWM(ADCBuffer[0]));
+    		}    		
+//	       	PMSM_SetPWM(PMSM_ADCToPWM(ADCBuffer[2]));
+	    	PMSM_SetPWM((uint16_t)PWMSet);
 	    }else {
-	    PMSM_SetPWM(0);
-	        	}
+			PMSM_SetPWM(0);
+	    }
 #endif
 	    
 #if defined (CONTROL_PWM)
@@ -136,27 +135,54 @@ int main(void)
 	    }
 	    else
 	    {
-		    if ((InputSignalPercentDutyCycle > 10) && (InputSignalPercentDutyCycle < 90)) {
-			    // If Motor Is not run
-			    if(PMSM_MotorIsRun() == 0) {
-				    // Start motor
-				    PMSM_MotorSetSpin(PMSM_CW);
-				    PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
-				    PMSM_MotorSetRun();
-			    } else {				    
-				    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * 45;				    
-				    expRunningAverage(PWM, &PWMSet, 0.00003);
-				    PMSM_SetPWM((uint16_t)PWMSet);
+		    if (PMSM_MotorIsRun() == 0)
+		    {
+			    if ((InputSignalPercentDutyCycle > 10) && (InputSignalPercentDutyCycle < 90)) {
+				    // If Motor Is not run
+				    if(PMSM_MotorIsRun() == 0) {
+					    // Start motor
+					    PMSM_MotorSetSpin(PMSM_CW);
+					    PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
+					    PMSM_MotorSetRun();
+				    } else {				    
+					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * 45;				    
+					    expRunningAverage(PWM, &PWMSet, 0.00003);
+					    PMSM_SetPWM((uint16_t)PWMSet);
+				    }
 			    }
+			    else
+			    {
+				    PMSM_MotorStop();			    
+				    PWMSet = 0;
+			    }		    
+	    
+		    }else
+		    {
+			    if ((InputSignalPercentDutyCycle > 5) && (InputSignalPercentDutyCycle < 95)) {
+				    // If Motor Is not run
+				    if(PMSM_MotorIsRun() == 0) {
+					    // Start motor
+					    PMSM_MotorSetSpin(PMSM_CW);
+					    PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
+					    PMSM_MotorSetRun();
+				    } else {				    
+					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * 45;				    
+					    expRunningAverage(PWM, &PWMSet, 0.00003);
+					    PMSM_SetPWM((uint16_t)PWMSet);
+				    }
+			    }
+			    else
+			    {
+				    PMSM_MotorStop();			    
+				    PWMSet = 0;
+			    }		    
+			    
 		    }
-		    else
-			{
-			    PMSM_MotorStop();			    
-			    PWMSet = 0;
-		    }		    
+
 	    }
 #endif
     }
+
 }
 
 
