@@ -411,7 +411,7 @@ void PMSM_PWMTimerInit(void){
 
 	// Time Base configuration
 	TIM_TimeBaseStructure.TIM_Prescaler = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned1;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned3;
 	TIM_TimeBaseStructure.TIM_Period = PMSM_CHOPPER_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;

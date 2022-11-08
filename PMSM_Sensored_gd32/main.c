@@ -32,10 +32,8 @@ void SysTick_Handler(){
 void EXTI15_10_IRQHandler(){
 
 	if (RESET != exti_interrupt_flag_get(EXTI_12)) {		
-		exti_interrupt_flag_clear(EXTI_12);
-		
-		InputPWM_NoSignalFlag = 0;
-		
+		exti_interrupt_flag_clear(EXTI_12);		
+		InputPWM_NoSignalFlag = 0;		
 		if (gpio_input_bit_get(GPIOA, GPIO_PIN_12)) {			
 			InputPwmFreq = (float)((uint32_t)SysTick_LOAD_RELOAD_Msk - (uint32_t)SysTick->VAL);
 			InputPWM_SignalRisingFlag = 1;
