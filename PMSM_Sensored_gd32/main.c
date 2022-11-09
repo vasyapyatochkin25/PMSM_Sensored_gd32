@@ -143,7 +143,7 @@ int main(void)
 					    PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
 					    PMSM_MotorSetRun();
 				    } else {				    
-					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * 45;				    
+					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * ONE_PERCENT_DUTYCUCLE;				    
 					    expRunningAverage(PWM, &PWMSet, 0.00003);
 					    PMSM_SetPWM((uint16_t)PWMSet);
 				    }
@@ -164,7 +164,7 @@ int main(void)
 					    PMSM_MotorCommutation(PMSM_HallSensorsGetPosition());
 					    PMSM_MotorSetRun();
 				    } else {				    
-					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * 45;				    
+					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * ONE_PERCENT_DUTYCUCLE;				    
 					    expRunningAverage(PWM, &PWMSet, 0.00003);
 					    PMSM_SetPWM((uint16_t)PWMSet);
 				    }
