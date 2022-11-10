@@ -17,6 +17,7 @@ void ADC_DMA_init(void)
 	
 	gpio_init(GPIOA, GPIO_MODE_AIN, GPIO_OSPEED_50MHZ, GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3);
 	gpio_init(GPIOB, GPIO_MODE_AIN, GPIO_OSPEED_50MHZ, GPIO_PIN_1);
+//	gpio_init(GPIOA, GPIO_MODE_OUT_PP, GPIO_OSPEED_50MHZ, GPIO_PIN_3);
 	
 	dma_parameter_struct dma_data_parameter;    
 	/* ADC DMA_channel configuration */
@@ -72,18 +73,5 @@ void ADC_DMA_init(void)
 	adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
 }
 
-uint16_t adc_channel_sample(uint8_t channel)
-{
-	/* ADC regular channel config */
-	adc_regular_channel_config(ADC0, 0U, channel, ADC_SAMPLETIME_7POINT5);
-	/* ADC software trigger enable */
-	adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
 
-	/* wait the end of conversion flag */
-	while (!adc_flag_get(ADC0, ADC_FLAG_EOC)) ;
-	/* clear the end of conversion flag */
-	adc_flag_clear(ADC0, ADC_FLAG_EOC);
-	/* return regular channel sample value */
-	return (adc_regular_data_read(ADC0));
-}
 //=================================================================================

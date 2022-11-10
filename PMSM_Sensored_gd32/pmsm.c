@@ -6,11 +6,15 @@
 #include "string.h"
 #include "stdio.h"
 
+
 #include "pmsm.h"
 
 void TIM4_IRQHandler(void);
 
 // Variables
+int Ia, Ib, Ic;
+int Ialpha, Ibeta;
+extern int CurrentZeroIc, CurrentZeroIb;
 volatile uint8_t PMSM_MotorRunFlag = 0;
 volatile uint8_t PMSM_MotorSpin = PMSM_CW;
 uint8_t PMSM_State[6] = {0, 0, 0, 0, 0, 0};
@@ -388,6 +392,7 @@ void EXTI9_5_IRQHandler(void) {
 
 // Initialize Timer TIM1 & PWM output. Timer TIM1 generate 6-PWM outputs
 void PMSM_PWMTimerInit(void){
+	
 	GPIO_InitTypeDef GPIO_InitStructure;
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	TIM_OCInitTypeDef  TIM_OCInitStructure;
@@ -411,7 +416,7 @@ void PMSM_PWMTimerInit(void){
 
 	// Time Base configuration
 	TIM_TimeBaseStructure.TIM_Prescaler = 0;
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned3;
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_CenterAligned2;
 	TIM_TimeBaseStructure.TIM_Period = PMSM_CHOPPER_PERIOD;
 	TIM_TimeBaseStructure.TIM_ClockDivision = 0;
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;
@@ -447,7 +452,8 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 
 	TIM_ITConfig(TIM1, TIM_IT_Break, ENABLE);
-	
+//	TIM_ITConfig(TIM1, TIM_IT_CC1, ENABLE);
+	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
 	TIM_Cmd(TIM1, ENABLE);
 	 // Enable motor timer main output (the bridge signals)
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
@@ -457,8 +463,57 @@ void PMSM_PWMTimerInit(void){
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
+	
+//	NVIC_InitStructure.NVIC_IRQChannel = TIM1_CC_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
+	
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	
 
 }
+void TIM1_UP_IRQHandler()
+{
+	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
+	{		
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
+		
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15))
+		{
+//			GPIO_SetBits(GPIOA, GPIO_Pin_3);	
+			Ic = (int)adc_channel_sample(3) - CurrentZeroIc;
+			Ia = (Ib + Ic) * -1;
+		}
+		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14))
+		{
+//			GPIO_SetBits(GPIOA, GPIO_Pin_3);	
+			Ib = (int)adc_channel_sample(2) - CurrentZeroIb;
+			Ia = (Ib + Ic) * -1;
+		}
+		Ialpha = Ia;
+		Ibeta = 0.57735*(Ia+2*Ib);
+		
+	}
+//	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+}
+
+//void TIM1_CC_IRQHandler()
+//{
+//	if (TIM_GetITStatus(TIM1, TIM_IT_CC1) != RESET)
+//	{
+//		TIM_ClearITPendingBit(TIM1, TIM_IT_CC1);
+//		
+//		GPIO_SetBits(GPIOA, GPIO_Pin_3);
+//		
+//	}
+//	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
+//}
 
 void TIM1_BRK_IRQHandler(void)
 {

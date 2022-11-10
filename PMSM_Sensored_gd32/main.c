@@ -1,7 +1,6 @@
 //#include "stm32f10x.h"
 #include "gd32f10x.h"
-#include "gd32f10x_adc.h"
-#include "gd32f10x_rcu.h"
+
 #include "sysclk.h"
 #include "adc_dma.h"
 #include "pmsm.h"
@@ -15,10 +14,11 @@ float InputSignalFreq = 0;
 
 extern uint8_t OverCurrentFlag;
 void expRunningAverage(float newVal, float* filVal, float k);
+uint16_t adc_channel_sample(uint8_t channel);
 float PWMSet = 0;
 float Voltage, Current;
 float Speed;
-uint16_t CurrentZero;
+int CurrentZeroIc, CurrentZeroIb;
 extern volatile int8_t PMSM_Timing;
 void SysTick_Handler(){
 //	InputPWM_NoSignalFlag = 1;
@@ -58,8 +58,8 @@ int main(void)
 //	//PMSM Init
 	PMSM_Init();
 
-	CurrentZero = adc_channel_sample(ADC_CHANNEL_3);
-	
+	CurrentZeroIc = adc_channel_sample(ADC_CHANNEL_3);
+	CurrentZeroIb = adc_channel_sample(ADC_CHANNEL_2);
 //	rcu_periph_clock_enable(RCU_GPIOA);
 //	gpio_init(GPIOA, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, GPIO_PIN_12);
 //
@@ -182,7 +182,20 @@ int main(void)
     }
 
 }
+uint16_t adc_channel_sample(uint8_t channel)
+{
+	/* ADC regular channel config */
+	adc_regular_channel_config(ADC0, 0U, channel, ADC_SAMPLETIME_7POINT5);
+	/* ADC software trigger enable */
+	adc_software_trigger_enable(ADC0, ADC_REGULAR_CHANNEL);
 
+	/* wait the end of conversion flag */
+	while (!adc_flag_get(ADC0, ADC_FLAG_EOC)) ;
+	/* clear the end of conversion flag */
+	adc_flag_clear(ADC0, ADC_FLAG_EOC);
+	/* return regular channel sample value */
+	return (adc_regular_data_read(ADC0));
+}
 
 // бегущее среднее
 void expRunningAverage(float newVal, float* filVal, float k) {
