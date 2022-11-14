@@ -18,12 +18,11 @@ uint16_t adc_channel_sample(uint8_t channel);
 float PWMSet = 0;
 float Voltage, Current;
 float Speed;
-int CurrentZeroIc, CurrentZeroIb;
 extern volatile int8_t PMSM_Timing;
 void SysTick_Handler(){
-//	InputPWM_NoSignalFlag = 1;
-//	InputSignalPercentDutyCycle = 0;
-//	InputSignalFreq = 0;
+	InputPWM_NoSignalFlag = 1;
+	InputSignalPercentDutyCycle = 0;
+	InputSignalFreq = 0;
 }
 
 ///////////////////////////////////////////////////////////	 
@@ -58,8 +57,6 @@ int main(void)
 //	//PMSM Init
 	PMSM_Init();
 
-	CurrentZeroIc = adc_channel_sample(ADC_CHANNEL_3);
-	CurrentZeroIb = adc_channel_sample(ADC_CHANNEL_2);
 //	rcu_periph_clock_enable(RCU_GPIOA);
 //	gpio_init(GPIOA, GPIO_MODE_IPU, GPIO_OSPEED_50MHZ, GPIO_PIN_12);
 //

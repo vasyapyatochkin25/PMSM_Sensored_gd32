@@ -447,13 +447,11 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;
 
 	// Break functionality
-	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
+	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
 	TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 
 	TIM_ITConfig(TIM1, TIM_IT_Break, ENABLE);
-//	TIM_ITConfig(TIM1, TIM_IT_CC1, ENABLE);
-	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE);
 	TIM_Cmd(TIM1, ENABLE);
 	 // Enable motor timer main output (the bridge signals)
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
@@ -464,56 +462,10 @@ void PMSM_PWMTimerInit(void){
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 	
-//	NVIC_InitStructure.NVIC_IRQChannel = TIM1_CC_IRQn;
-//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-//	NVIC_Init(&NVIC_InitStructure);
-	
-	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-	
 
 }
-void TIM1_UP_IRQHandler()
-{
-	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)
-	{		
-		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);
-		
-		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_15))
-		{
-//			GPIO_SetBits(GPIOA, GPIO_Pin_3);	
-			Ic = (int)adc_channel_sample(3) - CurrentZeroIc;
-			Ia = (Ib + Ic) * -1;
-		}
-		if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_14))
-		{
-//			GPIO_SetBits(GPIOA, GPIO_Pin_3);	
-			Ib = (int)adc_channel_sample(2) - CurrentZeroIb;
-			Ia = (Ib + Ic) * -1;
-		}
-		Ialpha = Ia;
-		Ibeta = 0.57735*(Ia+2*Ib);
-		
-	}
-//	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-}
 
-//void TIM1_CC_IRQHandler()
-//{
-//	if (TIM_GetITStatus(TIM1, TIM_IT_CC1) != RESET)
-//	{
-//		TIM_ClearITPendingBit(TIM1, TIM_IT_CC1);
-//		
-//		GPIO_SetBits(GPIOA, GPIO_Pin_3);
-//		
-//	}
-//	GPIO_ResetBits(GPIOA, GPIO_Pin_3);
-//}
+
 
 void TIM1_BRK_IRQHandler(void)
 {
