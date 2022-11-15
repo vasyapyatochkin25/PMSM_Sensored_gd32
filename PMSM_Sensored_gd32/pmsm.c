@@ -9,12 +9,7 @@
 
 #include "pmsm.h"
 
-void TIM4_IRQHandler(void);
-
 // Variables
-int Ia, Ib, Ic;
-int Ialpha, Ibeta;
-extern int CurrentZeroIc, CurrentZeroIb;
 volatile uint8_t PMSM_MotorRunFlag = 0;
 volatile uint8_t PMSM_MotorSpin = PMSM_CW;
 uint8_t PMSM_State[6] = {0, 0, 0, 0, 0, 0};
@@ -447,7 +442,7 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;
 
 	// Break functionality
-	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
+	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
 	TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 
@@ -465,8 +460,6 @@ void PMSM_PWMTimerInit(void){
 
 }
 
-
-
 void TIM1_BRK_IRQHandler(void)
 {
 	if (TIM_GetITStatus(TIM1, TIM_IT_Break) != RESET)
@@ -476,8 +469,6 @@ void TIM1_BRK_IRQHandler(void)
 		OverCurrentFlag = 1;
 	}
 }
-
-
 
 // Initialize TIM4 which generate 3-phase sine signal
 void PMSM_SinTimerInit(void) {

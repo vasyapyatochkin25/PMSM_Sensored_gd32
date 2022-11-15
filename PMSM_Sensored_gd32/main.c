@@ -19,6 +19,8 @@ float PWMSet = 0;
 float Voltage, Current;
 float Speed;
 extern volatile int8_t PMSM_Timing;
+
+
 void SysTick_Handler(){
 	InputPWM_NoSignalFlag = 1;
 	InputSignalPercentDutyCycle = 0;
@@ -36,13 +38,11 @@ void EXTI15_10_IRQHandler(){
 		if (gpio_input_bit_get(GPIOA, GPIO_PIN_12)) {			
 			InputPwmFreq = (float)((uint32_t)SysTick_LOAD_RELOAD_Msk - (uint32_t)SysTick->VAL);
 			InputPWM_SignalRisingFlag = 1;
-//			InputSignalFreq = TIME_CLOCK_SYSTICK / InputPwmFreq;
 			SysTick->VAL = SysTick_LOAD_RELOAD_Msk;
 		} else {
 			InputPwmDutyCycle = InputPwmFreq - ((uint32_t)SysTick_LOAD_RELOAD_Msk - (uint32_t)SysTick->VAL);
 			InputPWM_SignalFallingFlag = 1;
-//			InputSignalPercentDutyCycle = 100 - (float)(InputPwmDutyCycle * 100) / InputPwmFreq;
-//			InputSignalPercentDutyCycle += 2;
+
 		}	
 	}
 }
@@ -119,14 +119,11 @@ int main(void)
 #if defined (CONTROL_PWM)
 	    if(OverCurrentFlag)
 	    {
-		    while (1)
-		    {
-			    if ((InputSignalPercentDutyCycle > 90)||(InputSignalPercentDutyCycle < 10))
-			    {
-				    OverCurrentFlag = 0;	    
-				    break;
-			    }
-		    }
+			if ((InputSignalPercentDutyCycle > 90)||(InputSignalPercentDutyCycle < 10))
+			{
+				OverCurrentFlag = 0;	    
+				break;
+			}
 	    }
 	    else
 	    {
