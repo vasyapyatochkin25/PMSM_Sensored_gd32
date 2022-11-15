@@ -22,9 +22,9 @@ extern volatile int8_t PMSM_Timing;
 
 
 void SysTick_Handler(){
-	InputPWM_NoSignalFlag = 1;
-	InputSignalPercentDutyCycle = 0;
-	InputSignalFreq = 0;
+//	InputPWM_NoSignalFlag = 1;
+//	InputSignalPercentDutyCycle = 0;
+//	InputSignalFreq = 0;
 }
 
 ///////////////////////////////////////////////////////////	 
@@ -78,8 +78,7 @@ int main(void)
 
 
     while(1)
-    {	    
-	    	    
+    {	    	    	    
 	    Voltage = (float)adc_channel_sample(ADC_CHANNEL_0) * 0.00493767;
 //	    expRunningAverage((float)ADCBuffer[1] * 0.0075 + 2.0924, &Current, 0.001);  //* 0.0008056640625 * 21.621
 	    expRunningAverage((float)(TIME_CLOCK_SYSTICK / PMSM_GetSpeed()) / 22, &Speed, 0.001);	

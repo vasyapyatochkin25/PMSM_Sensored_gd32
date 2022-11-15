@@ -296,6 +296,7 @@ void PMSM_MotorStop(void)
 
 // Configure GPIO, NVIC, EXTI for 3 Hall sensors
 void PMSM_HallSensorsInit(void) {
+	
 	GPIO_InitTypeDef GPIO_InitStruct;
 	EXTI_InitTypeDef EXTI_InitStruct;
 	NVIC_InitTypeDef NVIC_InitStruct;
@@ -305,7 +306,7 @@ void PMSM_HallSensorsInit(void) {
 
 	// Init GPIO
 	GPIO_InitStruct.GPIO_Pin = GPIO_Pin_7 | GPIO_Pin_8 | GPIO_Pin_9;
-	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IPU;
+	GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN_FLOATING;
 	GPIO_InitStruct.GPIO_Speed = GPIO_Speed_10MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStruct);
 
