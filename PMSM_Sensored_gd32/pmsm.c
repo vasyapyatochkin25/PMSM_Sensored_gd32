@@ -22,7 +22,7 @@ volatile uint8_t PMSM_ModeEnabled = 0;
 volatile uint8_t OverCurrentFlag = 0;
 // Timing (points in sine table)
 // sine table contains 192 items; 360/192 = 1.875 degrees per item
-volatile static int8_t PMSM_Timing = 10; // 15 * 1.875 = 28.125 degrees
+volatile static int8_t PMSM_Timing = 5; // 15 * 1.875 = 28.125 degrees
 
 // Forward Motor steps
 static const uint8_t PMSM_BRIDGE_STATE_FORWARD[8][6] =
@@ -443,7 +443,7 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;
 
 	// Break functionality
-	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
+	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
 	TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 

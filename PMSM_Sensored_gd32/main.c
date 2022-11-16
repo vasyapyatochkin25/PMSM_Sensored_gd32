@@ -42,7 +42,6 @@ void EXTI15_10_IRQHandler(){
 		} else {
 			InputPwmDutyCycle = InputPwmFreq - ((uint32_t)SysTick_LOAD_RELOAD_Msk - (uint32_t)SysTick->VAL);
 			InputPWM_SignalFallingFlag = 1;
-
 		}	
 	}
 }
@@ -118,7 +117,7 @@ int main(void)
 #if defined (CONTROL_PWM)
 	    if(OverCurrentFlag)
 	    {
-			if ((InputSignalPercentDutyCycle > 90)||(InputSignalPercentDutyCycle < 10))
+			if ((InputSignalPercentDutyCycle > 95)||(InputSignalPercentDutyCycle < 5))
 			{
 				OverCurrentFlag = 0;	    
 				break;
