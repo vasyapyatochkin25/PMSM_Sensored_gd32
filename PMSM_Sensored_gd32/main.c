@@ -11,7 +11,6 @@ float InputPwmDutyCycle = 0, InputPwmFreq = 0;
 uint8_t InputPWM_NoSignalFlag = 0, InputPWM_SignalRisingFlag = 0, InputPWM_SignalFallingFlag = 0;
 float InputSignalPercentDutyCycle = 0;
 float InputSignalFreq = 0;
-
 extern uint8_t OverCurrentFlag;
 void expRunningAverage(float newVal, float* filVal, float k);
 uint16_t adc_channel_sample(uint8_t channel);
@@ -22,9 +21,9 @@ extern volatile int8_t PMSM_Timing;
 
 
 void SysTick_Handler(){
-//	InputPWM_NoSignalFlag = 1;
-//	InputSignalPercentDutyCycle = 0;
-//	InputSignalFreq = 0;
+	InputPWM_NoSignalFlag = 1;
+	InputSignalPercentDutyCycle = 0;
+	InputSignalFreq = 0;
 }
 
 ///////////////////////////////////////////////////////////	 
@@ -49,11 +48,11 @@ void EXTI15_10_IRQHandler(){
 int main(void)
 {
 	SetSysClockTo72();
-	
+//	switch_system_clock_to_72m_irc8m();
 	// ADC Init
 	ADC_DMA_init();
 		
-//	//PMSM Init
+    //PMSM Init
 	PMSM_Init();
 
 //	rcu_periph_clock_enable(RCU_GPIOA);
@@ -117,11 +116,11 @@ int main(void)
 #if defined (CONTROL_PWM)
 	    if(OverCurrentFlag)
 	    {
-			if ((InputSignalPercentDutyCycle > 95)||(InputSignalPercentDutyCycle < 5))
-			{
-				OverCurrentFlag = 0;	    
-				break;
-			}
+		    if ((InputSignalPercentDutyCycle > 95) || (InputSignalPercentDutyCycle < 5))
+		    {
+			    OverCurrentFlag = 0;	    
+			    break;
+		    }
 	    }
 	    else
 	    {
@@ -136,7 +135,7 @@ int main(void)
 					    PMSM_MotorSetRun();
 				    } else {				    
 					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * ONE_PERCENT_DUTYCUCLE;				    
-					    expRunningAverage(PWM, &PWMSet, 0.00003);
+					    expRunningAverage(PWM, &PWMSet, 0.0003);
 					    PMSM_SetPWM((uint16_t)PWMSet);
 				    }
 			    }
@@ -157,7 +156,7 @@ int main(void)
 					    PMSM_MotorSetRun();
 				    } else {				    
 					    float PWM = (InputSignalPercentDutyCycle * 1.125 - 1.25) * ONE_PERCENT_DUTYCUCLE;				    
-					    expRunningAverage(PWM, &PWMSet, 0.00003);
+					    expRunningAverage(PWM, &PWMSet, 0.0003);
 					    PMSM_SetPWM((uint16_t)PWMSet);
 				    }
 			    }
@@ -196,3 +195,10 @@ void expRunningAverage(float newVal, float* filVal, float k) {
 }
 
 
+void HardFault_Handler()
+{
+	while (1)
+	{
+		NVIC_SystemReset();
+	}
+}

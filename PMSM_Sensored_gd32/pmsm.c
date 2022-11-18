@@ -443,20 +443,20 @@ void PMSM_PWMTimerInit(void){
 	TIM_BDTRInitStructure.TIM_AutomaticOutput = TIM_AutomaticOutput_Enable;
 
 	// Break functionality
-	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Enable;
+	TIM_BDTRInitStructure.TIM_Break = TIM_Break_Disable;
 	TIM_BDTRInitStructure.TIM_BreakPolarity = TIM_BreakPolarity_Low;
 	TIM_BDTRConfig(TIM1, &TIM_BDTRInitStructure);
 
-	TIM_ITConfig(TIM1, TIM_IT_Break, ENABLE);
+//	TIM_ITConfig(TIM1, TIM_IT_Bre89ak, ENABLE);
 	TIM_Cmd(TIM1, ENABLE);
 	 // Enable motor timer main output (the bridge signals)
 	TIM_CtrlPWMOutputs(TIM1, ENABLE);
 	
-	NVIC_InitStructure.NVIC_IRQChannel = TIM1_BRK_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
+//	NVIC_InitStructure.NVIC_IRQChannel = TIM1_BRK_IRQn;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+//	NVIC_Init(&NVIC_InitStructure);
 	
 
 }

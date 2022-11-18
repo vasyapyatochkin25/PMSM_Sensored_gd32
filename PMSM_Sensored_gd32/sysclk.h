@@ -72,6 +72,110 @@ void SetSysClockTo72(void)
 	}
 }
 
+void switch_system_clock_to_108m_irc8m(void)
+{
+	uint32_t timeout = 0U;
+	uint32_t stab_flag = 0U;
+    
+	/* select IRC8M as system clock source, deinitialize the RCU */
+	rcu_system_clock_source_config(RCU_CKSYSSRC_IRC8M);
+	rcu_deinit();
+    
+	/* enable IRC8M */
+	RCU_CTL |= RCU_CTL_IRC8MEN;
+
+	/* wait until IRC8M is stable or the startup time is longer than IRC8M_STARTUP_TIMEOUT */
+	do {
+		timeout++;
+		stab_flag = (RCU_CTL & RCU_CTL_IRC8MSTB);
+	} while ((0U == stab_flag) && (IRC8M_STARTUP_TIMEOUT != timeout));
+
+	/* if fail */
+	if (0U == (RCU_CTL & RCU_CTL_IRC8MSTB)) {
+		while (1) {
+		}
+	}
+
+	/* IRC8M is stable */
+	/* AHB = SYSCLK */
+	RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+	/* APB2 = AHB/1 */
+	RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
+	/* APB1 = AHB/2 */
+	RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
+
+	/* CK_PLL = (CK_IRC8M/2) * 27 = 108 MHz */
+	RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
+	RCU_CFG0 |= RCU_PLL_MUL27;
+
+	/* enable PLL */
+	RCU_CTL |= RCU_CTL_PLLEN;
+
+	/* wait until PLL is stable */
+	while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {
+	}
+
+	/* select PLL as system clock */
+	RCU_CFG0 &= ~RCU_CFG0_SCS;
+	RCU_CFG0 |= RCU_CKSYSSRC_PLL;
+
+	/* wait until PLL is selected as system clock */
+	while (RCU_SCSS_PLL != (RCU_CFG0 & RCU_CFG0_SCSS)) {
+	}
+}
+
+void switch_system_clock_to_72m_irc8m(void)
+{
+	uint32_t timeout = 0U;
+	uint32_t stab_flag = 0U;
+    
+	/* select IRC8M as system clock source, deinitialize the RCU */
+	rcu_system_clock_source_config(RCU_CKSYSSRC_IRC8M);
+	rcu_deinit();
+    
+	/* enable IRC8M */
+	RCU_CTL |= RCU_CTL_IRC8MEN;
+
+	/* wait until IRC8M is stable or the startup time is longer than IRC8M_STARTUP_TIMEOUT */
+	do {
+		timeout++;
+		stab_flag = (RCU_CTL & RCU_CTL_IRC8MSTB);
+	} while ((0U == stab_flag) && (IRC8M_STARTUP_TIMEOUT != timeout));
+
+	/* if fail */
+	if (0U == (RCU_CTL & RCU_CTL_IRC8MSTB)) {
+		while (1) {
+		}
+	}
+
+	/* IRC8M is stable */
+	/* AHB = SYSCLK */
+	RCU_CFG0 |= RCU_AHB_CKSYS_DIV1;
+	/* APB2 = AHB/1 */
+	RCU_CFG0 |= RCU_APB2_CKAHB_DIV1;
+	/* APB1 = AHB/2 */
+	RCU_CFG0 |= RCU_APB1_CKAHB_DIV2;
+
+	/* CK_PLL = (CK_IRC8M/2) * 27 = 108 MHz */
+	RCU_CFG0 &= ~(RCU_CFG0_PLLMF | RCU_CFG0_PLLMF_4);
+	RCU_CFG0 |= RCU_PLL_MUL18;//72MHz
+
+	/* enable PLL */
+	RCU_CTL |= RCU_CTL_PLLEN;
+
+	/* wait until PLL is stable */
+	while (0U == (RCU_CTL & RCU_CTL_PLLSTB)) {
+	}
+
+	/* select PLL as system clock */
+	RCU_CFG0 &= ~RCU_CFG0_SCS;
+	RCU_CFG0 |= RCU_CKSYSSRC_PLL;
+
+	/* wait until PLL is selected as system clock */
+	while (RCU_SCSS_PLL != (RCU_CFG0 & RCU_CFG0_SCSS)) {
+	}
+}
+
 void delay_1ms(uint32_t count)
 {
 	uint32_t delay = count;
